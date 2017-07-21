@@ -1,0 +1,19 @@
+/* Stylesheet by Brian Robinson, 2017 */
+
+body{
+	height:800px;	
+}
+
+#map { 
+	height: 100%;
+	width: 100%;
+	
+	
+}
+div.cartodb-searchbox{
+	right:45%;
+}
+.page-header{
+	margin:0;
+	padding:0;
+}

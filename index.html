@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lewis and Clark National Forest</title>
+<!-- Google Font Family
+	<link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">    
+	-->	
+		<!--<link rel="stylesheet" href="lib/leaflet.css" /> -->
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+		<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+		<script src="lib/L.Control.Locate.js"></script>
+		<link rel="stylesheet" href="lib/L.Control.Locate.scss">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
+		<script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.3/leaflet.draw.css" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.3/leaflet.draw.js"></script>
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.css">
+		
+</head>
+		
+<body>
+	<div class="page-header">
+  <h2>Lewis &amp; Clark National Forest</h2>
+</div>
+	
+	<div id ="map"></div>
+	
+	<script type="infowindow/html" id="infowindow_waterbodies">
+  <div class="cartodb-popup v2">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="cartodb-popup-content-wrapper">
+       <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+         <h4>Name: </h4>
+         <p>{{content.data.waterbody_}}</p>
+		 <h4>Area in miles: </h4>
+		 <p>{{content.data.shape_area}}</p>
+       </div>
+     </div>
+     <div class="cartodb-popup-tip-container"></div>
+  </div>
+</script>
+
+<script type="infowindow/html" id="infowindow_streams">
+  <div class="cartodb-popup v2">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="cartodb-popup-content-wrapper">
+       <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+         <h4>Name: </h4>
+         <p>{{content.data.lc_name}}</p>
+		 <h4>Length in miles: </h4>
+		 <p>{{content.data.shape_leng}}</p>
+       </div>
+     </div>
+     <div class="cartodb-popup-tip-container"></div>
+  </div>
+</script>
+<script type="infowindow/html" id="infowindow_recsites">
+  <div class="cartodb-popup v2">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="cartodb-popup-content-wrapper">
+       <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+         <h4>Name: </h4>
+         <p>{{content.data.name}}</p>
+		 <h4>Type:</h4>
+		 <p>{{content.data.type}}</p>
+       </div>
+     </div>
+     <div class="cartodb-popup-tip-container"></div>
+  </div>
+</script>
+	<script type="infowindow/html" id="infowindow_fire_pts">
+  <div class="cartodb-popup v2">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="cartodb-popup-content-wrapper">
+       <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+         <h4>Name: </h4>
+         <p>{{content.data.fire_name}}</p>
+		 <h4>Date: </h4>
+		 <p>{{content.data.fire_month}}/{{content.data.fire_day}}/{{content.data.fire_year}}</p>
+       </div>
+     </div>
+     <div class="cartodb-popup-tip-container"></div>
+  </div>
+</script>
+	<script type="infowindow/html" id="infowindow_fire_area">
+  <div class="cartodb-popup v2">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="cartodb-popup-content-wrapper">
+       <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+        <h4>Name: </h4>
+         <p>{{content.data.fire_name}}</p>
+		 <h4>Date: </h4>
+		 <p>{{content.data.fire_month}}/{{content.data.fire_day}}/{{content.data.fire_year}}</p>
+		 <h4>Area in miles:</h4>
+		 <p>{{content.data.shape_area}}</p>
+       </div>
+     </div>
+     <div class="cartodb-popup-tip-container"></div>
+  </div>
+</script>
+	<script type="infowindow/html" id="infowindow_trails">
+  <div class="cartodb-popup v2">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="cartodb-popup-content-wrapper">
+       <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+         <h4>Name: </h4>
+         <p>{{content.data.name}}</p>
+		 <h4>Length in miles: </h4>
+		 <p>{{content.data.seg_length}}</p>
+		 <h4>Start of Trail:</h4>
+		 <p>{{content.data.begin_term}}</p>
+		 <h4>End of Trail:</h4>
+		 <p>{{content.data.end_termin}}</p>
+       </div>
+     </div>
+     <div class="cartodb-popup-tip-container"></div>
+  </div>
+</script>
+	<script type="infowindow/html" id="infowindow_roads">
+  <div class="cartodb-popup v2">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="cartodb-popup-content-wrapper">
+       <div class="cartodb-popup-content">
+         <!-- content.data contains the field info -->
+         <h4>Name: </h4>
+         <p>{{content.data.name}}</p>
+		 <h4>Length in miles: </h4>
+		 <p>{{content.data.shape_leng}}</p>
+       </div>
+     </div>
+     <div class="cartodb-popup-tip-container"></div>
+  </div>
+</script>
+
+
+	<script src="lib/jquery-3.1.1.min.js"></script>
+	<script src="js/main.js"></script>
+	
+</body>
+</html>
